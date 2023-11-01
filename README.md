@@ -63,7 +63,8 @@ This specification defines an extension to the JSON format to include semantic a
 - **Flexibility**: Supports both full and compacted IRIs for representation and linking.
 
 ## Challenges and Considerations
-
-- **Complexity**: Adds complexity to the JSON format, requiring familiarity with semantic web concepts.
 - **Dependency on External Schemas**: Relies on the availability and stability of external schemas.
 - **Error Handling**: Requires clear guidelines and mechanisms for handling errors such as missing schemas or invalid IRIs.
+
+## Linked-Objects-Schema
+- TBD
