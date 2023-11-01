@@ -1,7 +1,7 @@
-# Linked Objects: A JSON Semantic Extension Specification
+# Linked Objects: A JSON Extension Specification
 
 ## Overview
-This specification defines an extension to the JSON format to include semantic annotations, enabling the addition of context, identifiers, and types to JSON objects. It is designed to enhance interoperability, data linking, and the self-descriptiveness of JSON data.
+This specification defines an extension to the JSON format to include IRI support and semantic annotations, enabling the addition of schemas, identifiers, and types to JSON objects. It is designed to enhance interoperability, data linking, and the self-descriptiveness of JSON data.
 
 ## Properties
 
