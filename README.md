@@ -1,5 +1,9 @@
 # Linked Objects: A JSON Extension Specification
 
+# notes
+- schema can be # also
+- need to establish a @base so # can be used, and lo-ifragment in @id
+
 ## Overview
 This specification defines an extension to the JSON format to include IRI support and semantic annotations, enabling the addition of schemas, identifiers, and types to JSON objects. It is designed to enhance interoperability, data linking, and the self-descriptiveness of JSON data.
 
