@@ -5,18 +5,21 @@ This specification defines an extension to the JSON format to include IRI suppor
 
 ## IRI ABNF Extensions
 ```
-   lo-hash-IRI    = scheme ":" ihier-part [ "?" iquery ] "#"
+   lo-deref-IRI   = scheme ":" ihier-part [ "?" iquery ]
    
-   lo-IRI         = lo-hash-IRI "#" lo-ifragment
+   lo-ns-IRI      = lo-deref-IRI "#"
+   
+   lo-IRI         = lo-ns-IRI "#" lo-ifragment
    
    lo-ifragment   = 1*( ipchar / "/" / "?" )
 ```
 Informally
-- `lo-hash-IRI`, are IRIs that always end with an `#`, and are reserved to name schemas.
+- `lo-deref-IRI`, are dereferencable IRIs that never end with a `#fragment`.
+- `lo-ns-IRI`, are IRIs that always end with an `#`, and can be considered name spaces.
 - `lo-IRI`, are IRIs that end with a `#name`, and name Things, Properties, and Types.
 - `lo-frag`, are identical to IRIs `ifragment`, but require at least 1 char, and never contain a `#`.
-- To convert an `lo-IRI` to a `lo-hash-IRI` simply remove everything after the `#`.
-- To establish an `lo-IRI` from an `lo-hash-IRI` and a `lo-ifragment`, simply append the `lo-ifragment` to the `lo-hash-IRI`.
+- To convert an `lo-IRI` to a `lo-ns-IRI` simply remove everything after the `#`.
+- To establish an `lo-IRI` from an `lo-ns-IRI` and a `lo-ifragment`, simply append the `lo-ifragment` to the `lo-ns-IRI`.
 
 ## Properties
 
@@ -24,13 +27,13 @@ Informally
 - **Type**: `lo-ifragment` || `lo-IRI`
 - **Description**: When the value is an `lo-ifragment` and concatenated with `@schema`, it creates an IRI identifying the class of the object.
 - **Behavior**: 
-  - If the value of `@class` is a `lo-IRI`, the value of `@schema` MUST be set to the computed `lo-hash-IRI`.
+  - If the value of `@class` is a `lo-IRI`, the value of `@schema` MUST be set to the computed `lo-ns-IRI`.
   - Example: `"@class": "https://example.org/Agents#Person` entails `"@schema": "https://example.org/Agents#"`
   - If the value of `@class` is an `lo-ifragment`, the value MUST be appened to the closest `@schema` to compute it's `lo-IRI`
-  - Example: `{"@schema": "https://example.org/Agents#", "@class": "Person"}` implies a `lo-hash-IRI` of `https://example.org/Agents#Person`
+  - Example: `{"@schema": "https://example.org/Agents#", "@class": "Person"}` implies a `lo-ns-IRI` of `https://example.org/Agents#Person`
  
 ### @schema
-- **Type**: `lo-hash-IRI` (IRI ending with `#`)
+- **Type**: `lo-ns-IRI` (IRI ending with `#`)
 - **Description**: Specifies the schema of the current object and its children, providing semantic context and definitions.
 - **Behavior**: 
   - If not present in the current object, it should be inherited from a parent object.
