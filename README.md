@@ -17,11 +17,13 @@ This specification defines an extension to the JSON format to include IRI suppor
    
    lo-ifragment   = 1*( ipchar / "/" / "?" )
 ```
-Informally
+### Informally
 - `lo-deref-IRI`, are dereferencable IRIs that never end with a `#fragment`.
 - `lo-ns-IRI`, are IRIs that always end with an `#`, and can be considered name spaces.
 - `lo-IRI`, are IRIs that end with a `#name`, and name Things, Properties, and Types.
-- `lo-frag`, are identical to IRIs `ifragment`, but require at least 1 char, and never contain a `#`.
+- `lo-frag`, are identical to IRIs `ifragment`, but require at least 1 char, they never contain a `#`.
+
+### Converting
 - To convert an `lo-IRI` to a `lo-ns-IRI` simply remove everything after the `#`.
 - To convert an `lo-IRI` or a `lo-ns-IRI` to a `lo-deref-IRI` simply remove the `#` and any chars which follows it.
 - To establish an `lo-IRI` from an `lo-ns-IRI` and a `lo-ifragment`, simply append the `lo-ifragment` to the `lo-ns-IRI`.
