@@ -1,4 +1,4 @@
-# Linked Objects: A JSON Extension Specification
+# Hyperdata
 
 # notes
 - schema can be # also
