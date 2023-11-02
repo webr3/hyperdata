@@ -5,32 +5,30 @@ This specification defines an extension to the JSON format to include IRI suppor
 
 ## Properties
 
+### @class
+- **Type**: `ifragment` || `frag-IRI`
+- **Description**: When the value is an `ifragment` and concatenated with `@schema`, it creates an IRI identifying the class of the object.
+- **Behavior**: 
+  - If the value of `@class` is a `frag-IRI`, the value of `@schema` MUST be set to the computed `hash-IRI`.
+  - Example: `"@class": "https://example.org/Agents#Person` entails `"@schema": "https://example.org/Agents#"`
+  - If the value of `@class` is an `ifragment`, the value MUST be appened to the closest `@schema` to compute it's `frag-IRI`
+  - Example: `{"@schema": "https://example.org/Agents#", "@class": "Person"}` implies a `hash-IRI` of `https://example.org/Agents#Person`
+ 
 ### @schema
-- **Type**: IRI (ending with `#`)
+- **Type**: `hash-IRI` (IRI ending with `#`)
 - **Description**: Specifies the schema of the current object and its children, providing semantic context and definitions.
 - **Behavior**: 
-  - If not present in the current object, it should be inherited from a parent object or determined based on the `@type` property.
-  - If `@type` is a full IRI and `@schema` is not present, set `@schema` to the fragment-less IRI value of `@type` and append a `#`.
-  - Example: `"@type": "https://example.org/Agents#Person` entails `"@schema": "https://example.org/Agents#"`
+  - If not present in the current object, it should be inherited from a parent object.
 
 ### @id
-- **Type**: IRI
+- **Type**: `ifragment` || `frag-IRI`
 - **Description**: Serves as a unique identifier for the object of which this property belongs.
 - **Usage**: Enables unique identification of objects within the JSON document or across different documents.
 
-### @type
-- **Type**: String || full IRI
-- **Description**: When the value is a non-IRI string and concatenated with `@vocab`, it creates an IRI identifying the type of the object.
-- **Behavior**: 
-  - If `@type` is already a full IRI, `@vocab` is not required.
-  - Provides the basis for setting `@schema` if it is not explicitly defined.
-
 ## Object Property Names
-- Object properties should be concatenated to the value of `@vocab` to create IRIs, if the resulting value is defined in the schema then it must be considered as a canonical IRI identifying the property.
-- Example: `{"@schema": "https://example.org/Agents#", "nick": "Jonny"}` implies a full IRI of `https://example.org/Agents#nick`
-
-## Identifying IRIs in Values
-- If a value contains a colon and conforms to the specifications of a full IRI, it should be treated as an IRI.
+- **Type**: `ifragment` || `frag-IRI`
+- **Usage**: Object properties should be concatenated to the value of `@vocab` to establish a `frag-IRI` for the property, if the resulting value is defined in the schema then it must be considered as a canonical IRI identifying the property.
+- Example: `{"@schema": "https://example.org/Agents#", "nick": "Jonny"}` implies a `frag-IRI` of `https://example.org/Agents#nick`
 
 ## Constraints on JSON
 - None
@@ -49,7 +47,6 @@ This specification defines an extension to the JSON format to include IRI suppor
    "homepage": "https://jondoe.example.org/",
    "interest": "https://dbpedia.org/resource/Film",
    "knows":  {
-     "@type": "Person",
      "@id": "https://janedoe.example.org/#me",
      "name": "Jane Doe"
     }
@@ -57,16 +54,3 @@ This specification defines an extension to the JSON format to include IRI suppor
   ...
 ]
 ```
-## Implications and Use Cases
-
-- **Semantic Context**: Adds meaning and context to JSON objects, enhancing understandability.
-- **Interoperability**: Facilitates integration with other systems and datasets.
-- **Data Linking**: Enables creation of connected data graphs through linking and referencing.
-- **Flexibility**: Supports both full and compacted IRIs for representation and linking.
-
-## Challenges and Considerations
-- **Dependency on External Schemas**: Relies on the availability and stability of external schemas.
-- **Error Handling**: Requires clear guidelines and mechanisms for handling errors such as missing schemas or invalid IRIs.
-
-## Linked-Objects-Schema
-- TBD
