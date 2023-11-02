@@ -7,25 +7,26 @@ This specification defines an extension to the JSON format to include IRI suppor
 ```
    lo-hash-IRI    = scheme ":" ihier-part [ "?" iquery ] "#"
    
-   lo-IRI         = scheme ":" ihier-part [ "?" iquery ] "#" lo-ifrag
+   lo-IRI         = lo-hash-IRI "#" lo-ifragment
    
-   lo-ifrag      = 1*( ipchar / "/" / "?" )
+   lo-ifragment   = 1*( ipchar / "/" / "?" )
 ```
 Informally
 - `lo-hash-IRI`, are IRIs that always end with an `#`, and are reserved to name schemas.
 - `lo-IRI`, are IRIs that end with a `#name`, and name Things, Properties, and Types.
-- `lo-frag`, are simplified forms that are concatenated to a `lo-hash-IRI` to form an `lo-IRI`, they never contain `#`. They are identical to IRIs `ifragment`, but require at least 1 char.
+- `lo-frag`, are identical to IRIs `ifragment`, but require at least 1 char, and never contain a `#`.
 - To convert an `lo-IRI` to a `lo-hash-IRI` simply remove everything after the `#`.
+- To establish an `lo-IRI` from an `lo-hash-IRI` and a `lo-ifragment`, simply append the `lo-ifragment` to the `lo-hash-IRI`.
 
 ## Properties
 
 ### @class
-- **Type**: `lo-ifrag` || `lo-IRI`
-- **Description**: When the value is an `lo-ifrag` and concatenated with `@schema`, it creates an IRI identifying the class of the object.
+- **Type**: `lo-ifragment` || `lo-IRI`
+- **Description**: When the value is an `lo-ifragment` and concatenated with `@schema`, it creates an IRI identifying the class of the object.
 - **Behavior**: 
   - If the value of `@class` is a `lo-IRI`, the value of `@schema` MUST be set to the computed `lo-hash-IRI`.
   - Example: `"@class": "https://example.org/Agents#Person` entails `"@schema": "https://example.org/Agents#"`
-  - If the value of `@class` is an `lo-ifrag`, the value MUST be appened to the closest `@schema` to compute it's `lo-IRI`
+  - If the value of `@class` is an `lo-ifragment`, the value MUST be appened to the closest `@schema` to compute it's `lo-IRI`
   - Example: `{"@schema": "https://example.org/Agents#", "@class": "Person"}` implies a `lo-hash-IRI` of `https://example.org/Agents#Person`
  
 ### @schema
@@ -35,12 +36,12 @@ Informally
   - If not present in the current object, it should be inherited from a parent object.
 
 ### @id
-- **Type**: `lo-ifrag` || `lo-IRI`
+- **Type**: `lo-ifragment` || `lo-IRI`
 - **Description**: Serves as a unique identifier for the object of which this property belongs.
 - **Usage**: Enables unique identification of objects within the JSON document or across different documents.
 
 ## Object Property Names
-- **Type**: `lo-ifrag` || `lo-IRI`
+- **Type**: `lo-ifragment` || `lo-IRI`
 - **Usage**: Object properties should be concatenated to the value of `@vocab` to establish a `lo-IRI` for the property, if the resulting value is defined in the schema then it must be considered as a canonical IRI identifying the property.
 - Example: `{"@schema": "https://example.org/Agents#", "nick": "Jonny"}` implies a `lo-IRI` of `https://example.org/Agents#nick`
 
