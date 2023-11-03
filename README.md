@@ -13,11 +13,11 @@ Hyperdata is designed to layer on simply to existing JSON data, by adding a `@cl
 
 Doing this specifies the following values via implicit derivation:
 ```
-object class IRI:             https://example.com/schema#Article (full-IRI)
-namespace IRI:                https://example.com/schema# (ns-IRI)
-object property IRI:          https://example.com/schema#title (full-IRI)
-schema document IRI:          https://example.com/schema (base-IRI)
-short form name-fragments:    Article, title (name-fragment)
+object class IRI:             https://example.com/schema#Article       (full-IRI)
+namespace IRI:                https://example.com/schema#              (ns-IRI)
+object property IRI:          https://example.com/schema#title         (full-IRI)
+schema document IRI:          https://example.com/schema               (base-IRI)
+short form name-fragments:    Article, title                           (name-fragment)
 ```
 The expectation is that when you dereference the schema document `base-IRI` of `https://example.com/schema` (for example via HTTP GET), a successful response will be a Hyperdata document describing the schema within the established `https://example.com/schema#` namespace.
 
