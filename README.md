@@ -161,4 +161,5 @@ and agents can attempt to dereference the `base-IRI` to obtain the Hyperdata sch
 ```
 > GET /schema HTTP/1.1
 > Host: example.com
+> Accept: application/json
 ```
