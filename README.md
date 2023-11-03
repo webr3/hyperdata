@@ -1,6 +1,34 @@
 # Hyperdata
 
-This specification defines Hyperdata, an extension to JSON that adds IRI support, semantic annotations, and enables embedding schemas, identifiers, and classes in JSON objects. It is designed to enhance interoperability, data linking, and the self-descriptiveness of JSON data.
+This specification defines Hyperdata, an extension to JSON and IRI that adds classes, IRI identifiers, namespaces, and shared schemas to JSON objects. It is designed to enhance interoperability, data linking, and the self-descriptiveness of JSON data.
+
+## Introduction
+Hyperdata is designed to layer on simply to existing JSON data, by adding a `@class`:
+```
+{
+  "@class": "https://example.com/schema#Article",
+  "title": "Introduction to Hyperdata",
+}
+```
+
+We have specified via implicit derivation the following:
+```
+object class IRI:             https://example.com/schema#Article
+namespace IRI:                https://example.com/schema#
+object property IRI:          https://example.com/schema#title
+schema document IRI:          https://example.com/schema
+short form name-fragments:    Article, title
+```
+
+The previous example can also be written as follows, rendering the same results:
+```
+{
+  "@namespace": "https://example.com/schema#",
+  "@class": "Article",
+  "title": "Introduction to Hyperdata",
+}
+```
+
 
 ## Basic Concepts
 
@@ -10,40 +38,40 @@ A Hyperdata Document is a JSON document that can be dereferenced using a unique 
 
 When accessed over HTTP, the document should be served with the media type `application/json`.
 - `base-IRI` - a dereferencable IRI that does not include a `#name-fragment`.
-  - `https://example.org/schema`
+  - `https://example.com/schema`
   
 ### Hyperdata Namespace
 
 In a Hyperdata Document, the namespace it provides is identified by a `ns-IRI`. This defines a `@namespace` within which Things, Properties, and Classes are named and described.
 - `ns-IRI` - a namespace IRI which always ends with a `#`.
-  - `https://example.org/schema#`
+  - `https://example.com/schema#`
 
 ### Hyperdata Names
 
 In Hyperdata, Things, Properties, or Classes are given canonical `full-IRI` names.
 - `full-IRI` - an IRI that ends with a `#name-fragment`.
-  - `https://example.org/schema#Person`, `https://example.org/schema#name`
+  - `https://example.com/schema#Person`, `https://example.com/schema#name`
 
 Within a Hyperdata document, a short form `name-fragment` can be used as a more concise way to denote a `full-IRI` when combined with a `@namespace`.
 - `name-fragment` - a shorthand syntax used within hyperdata documents to represent a `full-IRI`.
-  - `{"@namespace": "https://example.org/schema#", "@class": "Person", "name": "Jon Doe"}`
+  - `{"@namespace": "https://example.com/schema#", "@class": "Person", "name": "Jon Doe"}`
 
 ### Implicit Derivation of Namespaces and Documents
 
 Hyperdata introduces a strict subset of IRI forms, which enable implicit derivation of both the namespace's `ns-IRI`, and the hyperdata document's `base-IRI` from a single `full-IRI`.
 
-Given a `@class` value of `https://example.org/schema#Person`, we can implicitly determine the `@namespace` to be `https://example.org/schema#` and the hyperdata document's dereferenceable `base-IRI` to be `https://example.org/schema`.
+Given a `@class` value of `https://example.com/schema#Person`, we can implicitly determine the `@namespace` to be `https://example.com/schema#` and the hyperdata document's dereferenceable `base-IRI` to be `https://example.com/schema`.
 
-Consequently, `{"@namespace": "https://example.org/schema#", "@class": "Person", "name": "Jon Doe"}` can succinctly be represented as `{"@class": "https://example.org/schema#Person", "name": "Jon Doe"}`.
+Consequently, `{"@namespace": "https://example.com/schema#", "@class": "Person", "name": "Jon Doe"}` can succinctly be represented as `{"@class": "https://example.com/schema#Person", "name": "Jon Doe"}`.
 
 To derive a `ns-IRI` from a `full-IRI`, remove everything after the `#`.
-- `https://example.org/schema#Person` to `https://example.org/schema#`
+- `https://example.com/schema#Person` to `https://example.com/schema#`
 
 To derive a `base-IRI` from a `full-IRI` or an `ns-IRI`, remove the `#` and any characters following it.
-- `https://example.org/schema#Person` OR `https://example.org/schema#` to `https://example.org/schema`
+- `https://example.com/schema#Person` OR `https://example.com/schema#` to `https://example.com/schema`
 
 To combine a `full-IRI` from a `ns-IRI` and a `name-fragment`, append the `name-fragment` to the `ns-IRI`.
-- `https://example.org/schema#` + `Person` = `https://example.org/schema#Person`
+- `https://example.com/schema#` + `Person` = `https://example.com/schema#Person`
 
 ## JSON Property Extensions
 
@@ -53,9 +81,9 @@ To combine a `full-IRI` from a `ns-IRI` and a `name-fragment`, append the `name-
 - **Description**: Specifies the full-IRI of the class of this object.
 - **Behavior**: 
   - If the value of `@class` is a `full-IRI`, the value of `@namespace` MUST be set to the computed `ns-IRI`.
-    - Example: `"@class": "https://example.org/schema#Person` entails `"@namespace": "https://example.org/schema#"`
+    - Example: `"@class": "https://example.com/schema#Person` entails `"@namespace": "https://example.com/schema#"`
   - If the value of `@class` is an `name-fragment`, the value MUST be appened to the in-scope `@namespace` to compute it's `full-IRI` value.
-    - Example: `{"@namespace": "https://example.org/schema#", "@class": "Person"}` entails a `full-IRI` of `https://example.org/schema#Person`
+    - Example: `{"@namespace": "https://example.com/schema#", "@class": "Person"}` entails a `full-IRI` of `https://example.com/schema#Person`
  
 ### @namespace
 - **Value Space**: `ns-IRI`
@@ -84,16 +112,16 @@ To combine a `full-IRI` from a `ns-IRI` and a `name-fragment`, append the `name-
 ```
 [
   {
-   "@namespace": "https://example.org/schema#",
+   "@namespace": "https://example.com/schema#",
    "@class": "Person",
-   "@id": "https://jondoe.example.org/#me",
+   "@id": "https://jondoe.example.com/#me",
    "name": "Jon Doe",
    "homepage": {
-     "href": "https://jondoe.example.org/",
+     "href": "https://jondoe.example.com/",
      "title": "Jon Doe's Homepage"
    },
    "knows":  {
-     "@id": "https://janedoe.example.org/#me",
+     "@id": "https://janedoe.example.com/#me",
      "name": "Jane Doe"
     }
   },
