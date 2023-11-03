@@ -138,17 +138,6 @@ Hyperdata extends the [Internationalized Resource Identifiers (IRIs) - RFC3987](
 
 Hyperdata introduces a strict subset of three IRI forms, each a valid IRI form, which enable implicit derivation of both the namespace's `ns-IRI`, and the Hyperdata document's `base-IRI` from a single `full-IRI`.
 
-Given a [`@class`](#class) value of `https://example.com/schema#Person`, we can implicitly determine the [`@namespace`](#namespace) to be `https://example.com/schema#` and the Hyperdata document's dereferenceable `base-IRI` to be `https://example.com/schema`.
-
-Consequently,
-```json
-{"@namespace": "https://example.com/schema#", "@class": "Person", "name": "Jon Doe"}
-```
-can succinctly be represented as:
-```json
-{"@class": "https://example.com/schema#Person", "name": "Jon Doe"}
-```
-
 To derive a `ns-IRI` from a `full-IRI`, remove everything after the `#`.
 - `https://example.com/schema#Person to https://example.com/schema#`
 
@@ -157,4 +146,15 @@ To derive a `base-IRI` from a `full-IRI` or an `ns-IRI`, remove the `#` and any 
 
 To combine a `full-IRI` from a `ns-IRI` and a `name-fragment`, append the `name-fragment` to the `ns-IRI`.
 - `https://example.com/schema# + Person = https://example.com/schema#Person`
+
+Given a [`@class`](#class) value of `https://example.com/schema#Person`, we can implicitly determine the [`@namespace`](#namespace) to be `https://example.com/schema#` and the Hyperdata document's dereferenceable `base-IRI` to be `https://example.com/schema`.
+
+Consequently:
+```json
+{"@namespace": "https://example.com/schema#", "@class": "Person", "name": "Jon Doe"}
+```
+can succinctly be represented as:
+```json
+{"@class": "https://example.com/schema#Person", "name": "Jon Doe"}
+```
 
