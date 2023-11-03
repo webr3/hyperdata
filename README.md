@@ -19,7 +19,9 @@ object property IRI:          https://example.com/schema#title
 schema document IRI:          https://example.com/schema
 short form name-fragments:    Article, title
 ```
-The expectation is that when you dereference the schema document IRI of `https://example.com/schema` (usually via HTTP GET), the response will be a hyperdata document describing the schema, which specifies the class, and it's named properties.
+The expectation is that when you dereference the schema document IRI of `https://example.com/schema` (for example via HTTP GET), a successful response will be a Hyperdata schema document describing the `https://example.com/schema#` namespace, which will specify the `Article` class, and it's named properties such as `title`.
+
+
 
 The previous example can also be written as follows, rendering the same results:
 ```
