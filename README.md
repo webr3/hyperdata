@@ -129,7 +129,7 @@ Hyperdata extends the [Internationalized Resource Identifiers (IRIs) - RFC3987](
    
    ns-IRI         = base-IRI "#"
    
-   full-IRI       = ns-IRI "#" name-fragment
+   full-IRI       = ns-IRI name-fragment
    
    name-fragment  = 1*( ipchar / "/" / "?" )
 ```
