@@ -68,8 +68,10 @@ In this example, the hyperdata includes an object property name `https://example
 ### @namespace
 - **Value Space**: `ns-IRI`
 - **Lexical Space**: `#` OR `ns-IRI`
-- **Description**: Specifies the namespace of the current object and its children, unless they define a different namespace explicitly via [`@namespace`](#namespace) or implicitly via a `full-IRI` `@type`.
-- **Behavior**: If not defined on the current in-scope object, it must be inherited from the parent object.
+- **Description**: Specifies the namespace of the current object and its children, unless they define a different namespace explicitly via [`@namespace`](#namespace) or implicitly via a `full-IRI` [`@class`](#class).
+- **Behavior**:
+  - If not defined on the current in-scope object, it MUST be inherited from the parent object.
+  - If the value of [`@class`](#class) is a `full-IRI`, this `@namespace` `ns-IRI` value MUST be ignored.
 
 ### Object Property Name Expansion
 - **Value Space**: `full-IRI`
