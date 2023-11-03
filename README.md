@@ -6,21 +6,27 @@ This specification defines Hyperdata, an extension to JSON that adds IRI support
 
 ### Hyperdata Document
 
-A deferencable JSON document identified by a `base-IRI`, for example `https://example.org/schema`, if served over HTTP the expected media type is `application/json`.
-- `base-IRI` - a dereferencable IRI that does not include a `#name-fragment`.
+A Hyperdata Document is a JSON document that can be dereferenced using a unique identifier known as the `base-IRI`.
 
+When accessed over HTTP, the document should be served with the media type `application/json`.
+- `base-IRI` - a dereferencable IRI that does not include a `#name-fragment`.
+  - `https://example.org/schema`
+  
 ### Hyperdata Namespace
 
-The namespace identified by a `ns-IRI` within a Hyperdata Document which defines a schema in which Things, Properties, and Classes are named. For example `https://example.org/schema#`.
+Within a Hyperdata Document, a specific namespace is identified by a `ns-IRI`. This namespace defines a schema that provides names for Things, Properties, and Classes.
 - `ns-IRI` - a namespace IRI which always ends with a `#`.
+  - `https://example.org/schema#`
 
 ### Hyperdata Name
 
-A canonical `full-IRI` name for a Thing, Property, or Class, for example `https://example.org/schema#Class`.
+In Hyperdata, Things, Properties, or Classes are given canonical `full-IRI` names.
 - `full-IRI` - an IRI that ends with a `#name-fragment`.
+  - `https://example.org/schema#Person`
 
-Within a Hyperdata document, a short form `name-fragment` can be used, for example: `{"@class": "Person"}`.
-- `name-fragment` - a shorthand syntax used within hyperdata documents to denote a `full-IRI`.
+Within a Hyperdata document, a short form `name-fragment` can be used as a more concise way to denote a `full-IRI`.
+- `name-fragment` - a shorthand syntax used within hyperdata documents to represent a `full-IRI`.
+  - `{"@class": "Person"}`
 
 ### Example Document
 
