@@ -42,6 +42,7 @@ Again, the expectation is that when you dereference the implicitly derived docum
 
 Hyperdata is designed to follow the common single class based inheritance model of `class Person extends Agent`, however so as not to constrain it's usage, object property names may be either a `name-fragment` as in previous examples, or a `full-URI`. Usage of a `full-URI` enables a mixin style composition of hyperdata object descriptions. In this example, the hyperdata includes an object property name from a different namespace to the default defined for the object.
 
+```
 {
   "@namespace": "https://example.com/schema#",
   "@class": "Article",
