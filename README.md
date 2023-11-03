@@ -11,7 +11,7 @@ Hyperdata is designed to layer on simply to existing JSON data, by adding a `@cl
 }
 ```
 
-We have specified via implicit derivation the following:
+We have specified the following values via implicit derivation:
 ```
 object class IRI:             https://example.com/schema#Article
 namespace IRI:                https://example.com/schema#
@@ -19,12 +19,14 @@ object property IRI:          https://example.com/schema#title
 schema document IRI:          https://example.com/schema
 short form name-fragments:    Article, title
 ```
+The expectation is that when you dereference the schema document IRI of `https://example.com/schema` (usually via HTTP GET), the response will be a hyperdata document describing the schema, which specifies the class, and it's named properties.
 
 The previous example can also be written as follows, rendering the same results:
 ```
 {
   "@namespace": "https://example.com/schema#",
   "@class": "Article",
+  "@id": "https://example.com/hyperdata-introduction#description",
   "title": "Introduction to Hyperdata",
 }
 ```
