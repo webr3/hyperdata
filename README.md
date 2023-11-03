@@ -22,11 +22,11 @@ In a Hyperdata Document, the namespace it provides is identified by a `ns-IRI`. 
 
 In Hyperdata, Things, Properties, or Classes are given canonical `full-IRI` names.
 - `full-IRI` - an IRI that ends with a `#name-fragment`.
-  - `https://example.org/schema#Person`
+  - `https://example.org/schema#Person`, `https://example.org/schema#name`
 
-Within a Hyperdata document, a short form `name-fragment` can be used as a more concise way to denote a `full-IRI`.
+Within a Hyperdata document, a short form `name-fragment` can be used as a more concise way to denote a `full-IRI` when combined with a `@namespace`.
 - `name-fragment` - a shorthand syntax used within hyperdata documents to represent a `full-IRI`.
-  - `{"@class": "Person"}`
+  - `{"@namespace": "https://example.org/schema#", "@class": "Person", "name": "Jon Doe"}`
 
 ### Example Document
 
@@ -36,10 +36,11 @@ Within a Hyperdata document, a short form `name-fragment` can be used as a more 
    "@namespace": "https://example.org/schema#",
    "@class": "Person",
    "@id": "https://jondoe.example.org/#me",
-   "nick": "Jonny",
    "name": "Jon Doe",
-   "depiction": "https://jondoe.example.org/me.jpg",
-   "homepage": "https://jondoe.example.org/",
+   "homepage": {
+     "href": "https://jondoe.example.org/",
+     "title": "Jon Doe's Homepage"
+   },
    "knows":  {
      "@id": "https://janedoe.example.org/#me",
      "name": "Jane Doe"
