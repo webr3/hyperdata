@@ -157,4 +157,8 @@ can succinctly be represented as:
 ```json
 {"@class": "https://example.com/schema#Person", "name": "Jon Doe"}
 ```
-
+and agents can attempt to dereference the `base-IRI` to obtain the Hyperdata schema:
+```
+> GET /schema HTTP/1.1
+> Host: example.com
+```
