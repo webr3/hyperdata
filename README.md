@@ -53,61 +53,6 @@ Hyperdata is designed to follow the common single class based inheritance model 
 ```
 In this example, the hyperdata includes an object property name `https://example.com/version#sha256` from a different namespace (`https://example.com/version#`) to the default defined for the object (`https://example.com/schema#`).
 
-## Basic Concepts
-
-### Hyperdata Document
-
-A Hyperdata Document is a JSON document that can be dereferenced using a unique identifier known as the `base-IRI`.
-
-When accessed over HTTP, the document should be served with the media type `application/json`.
-- `base-IRI` - a dereferencable IRI that does not include a `#name-fragment`.
-  - `https://example.com/schema`
-  
-### Hyperdata Namespace
-
-In a Hyperdata Document, the namespace it provides is identified by a `ns-IRI`. This defines a `@namespace` within which Things, Properties, and Classes are named and described.
-- `ns-IRI` - a namespace IRI which always ends with a `#`.
-  - `https://example.com/schema#`
-
-### Hyperdata Names
-
-In Hyperdata, Things, Properties, or Classes are given canonical `full-IRI` names.
-- `full-IRI` - an IRI that ends with a `#name-fragment`.
-  - `https://example.com/schema#Person`, `https://example.com/schema#name`
-
-Within a Hyperdata document, a short form `name-fragment` can be used as a more concise way to denote a `full-IRI` when combined with a `@namespace`.
-- `name-fragment` - a shorthand syntax used within hyperdata documents to represent a `full-IRI`.
-  - `{"@namespace": "https://example.com/schema#", "@class": "Person", "name": "Jon Doe"}`
-
-
-## IRI ABNF Extensions
-```
-   base-IRI       = scheme ":" ihier-part [ "?" iquery ]
-   
-   ns-IRI         = base-IRI "#"
-   
-   full-IRI       = ns-IRI "#" name-fragment
-   
-   name-fragment  = 1*( ipchar / "/" / "?" )
-```
-
-### Implicit Derivation of Namespaces and Documents
-
-Hyperdata introduces a strict subset of IRI forms, which enable implicit derivation of both the namespace's `ns-IRI`, and the hyperdata document's `base-IRI` from a single `full-IRI`.
-
-Given a `@class` value of `https://example.com/schema#Person`, we can implicitly determine the `@namespace` to be `https://example.com/schema#` and the hyperdata document's dereferenceable `base-IRI` to be `https://example.com/schema`.
-
-Consequently, `{"@namespace": "https://example.com/schema#", "@class": "Person", "name": "Jon Doe"}` can succinctly be represented as `{"@class": "https://example.com/schema#Person", "name": "Jon Doe"}`.
-
-To derive a `ns-IRI` from a `full-IRI`, remove everything after the `#`.
-- `https://example.com/schema#Person` to `https://example.com/schema#`
-
-To derive a `base-IRI` from a `full-IRI` or an `ns-IRI`, remove the `#` and any characters following it.
-- `https://example.com/schema#Person` OR `https://example.com/schema#` to `https://example.com/schema`
-
-To combine a `full-IRI` from a `ns-IRI` and a `name-fragment`, append the `name-fragment` to the `ns-IRI`.
-- `https://example.com/schema#` + `Person` = `https://example.com/schema#Person`
-
 ## JSON Property Extensions
 
 ### @class
@@ -140,4 +85,59 @@ To combine a `full-IRI` from a `ns-IRI` and a `name-fragment`, append the `name-
   - If the `full-IRI` cannot be determined to have a hyperdata description after successfully dereferencing the associated hyperdata document or some other out of band method, it should be treated as traditional json object property name (it's lexical string form `name-fragment`).
   - If the `full-IRI` belongs to a different hyperdata namespace than the current in-scope `@namespace`, the property MAY be treated as a Mixin.
   - If the `full-IRI` belongs to a different `@class` than the one specified for the in-scope object, the property MAY be treated as a Mixin.
+
+## IRI Name Concepts
+
+### Hyperdata Document
+
+A Hyperdata Document is a JSON document that can be dereferenced using a unique identifier known as the `base-IRI`.
+
+When accessed over HTTP, the document should be served with the media type `application/json`.
+- `base-IRI` - a dereferencable IRI that does not include a `#name-fragment`.
+  - `https://example.com/schema`
+  
+### Hyperdata Namespace
+
+In a Hyperdata Document, the namespace it provides is identified by a `ns-IRI`. This defines a `@namespace` within which Things, Properties, and Classes are named and described.
+- `ns-IRI` - a namespace IRI which always ends with a `#`.
+  - `https://example.com/schema#`
+
+### Hyperdata Names
+
+In Hyperdata, Things, Properties, or Classes are given canonical `full-IRI` names.
+- `full-IRI` - an IRI that ends with a `#name-fragment`.
+  - `https://example.com/schema#Person`, `https://example.com/schema#name`
+
+Within a Hyperdata document, a short form `name-fragment` can be used as a more concise way to denote a `full-IRI` when combined with a `@namespace`.
+- `name-fragment` - a shorthand syntax used within hyperdata documents to represent a `full-IRI`.
+  - `{"@namespace": "https://example.com/schema#", "@class": "Person", "name": "Jon Doe"}`
+
+
+### IRI ABNF Extensions
+```
+   base-IRI       = scheme ":" ihier-part [ "?" iquery ]
+   
+   ns-IRI         = base-IRI "#"
+   
+   full-IRI       = ns-IRI "#" name-fragment
+   
+   name-fragment  = 1*( ipchar / "/" / "?" )
+```
+
+### Implicit Derivation of Namespaces and Documents
+
+Hyperdata introduces a strict subset of IRI forms, which enable implicit derivation of both the namespace's `ns-IRI`, and the hyperdata document's `base-IRI` from a single `full-IRI`.
+
+Given a `@class` value of `https://example.com/schema#Person`, we can implicitly determine the `@namespace` to be `https://example.com/schema#` and the hyperdata document's dereferenceable `base-IRI` to be `https://example.com/schema`.
+
+Consequently, `{"@namespace": "https://example.com/schema#", "@class": "Person", "name": "Jon Doe"}` can succinctly be represented as `{"@class": "https://example.com/schema#Person", "name": "Jon Doe"}`.
+
+To derive a `ns-IRI` from a `full-IRI`, remove everything after the `#`.
+- `https://example.com/schema#Person` to `https://example.com/schema#`
+
+To derive a `base-IRI` from a `full-IRI` or an `ns-IRI`, remove the `#` and any characters following it.
+- `https://example.com/schema#Person` OR `https://example.com/schema#` to `https://example.com/schema`
+
+To combine a `full-IRI` from a `ns-IRI` and a `name-fragment`, append the `name-fragment` to the `ns-IRI`.
+- `https://example.com/schema#` + `Person` = `https://example.com/schema#Person`
 
