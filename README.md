@@ -32,7 +32,7 @@ Within a Hyperdata document, a short form `name-fragment` can be used as a more 
 
 Hyperdata introduces a strict subset of IRI forms, which enable implicit derivation of both the namespace's `ns-IRI`, and the hyperdata document's `base-IRI` from a single `full-IRI`.
 
-Given a `@class` value of `https://example.org/schema#Person`, we can implicitly determine the `@namespace` to be `https://example.org/schema# and the hyperdata document's dereferenceable `base-IRI` to be `https://example.org/schema`.
+Given a `@class` value of `https://example.org/schema#Person`, we can implicitly determine the `@namespace` to be `https://example.org/schema#` and the hyperdata document's dereferenceable `base-IRI` to be `https://example.org/schema`.
 
 Consequently, `{"@namespace": "https://example.org/schema#", "@class": "Person", "name": "Jon Doe"}` can succinctly be represented as `{"@class": "https://example.org/schema#Person", "name": "Jon Doe"}`.
 
