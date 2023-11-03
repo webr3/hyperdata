@@ -4,7 +4,7 @@ This specification defines Hyperdata, an extension to JSON and IRI that adds cla
 
 ## Introduction
 Hyperdata is designed to layer on simply to existing JSON data, by adding a [`@class`](#class):
-```
+```json
 {
   "@class": "https://example.com/schema#Article",
   "title": "Introduction to Hyperdata"
@@ -28,7 +28,7 @@ The dereferenced schema document is expected to specify:
 In this manner, the `Article` class and its `title` property are universally and unambiguously named within the IRI space, allowing shared understanding of readily accessible Hyperdata.
 
 By adding an [`@id`](#id) to the previous example, it can also be universally named within the IRI space, allowing it to be referenced and dereferenced within the web of Hyperdata.
-```
+```json
 {
   "@namespace": "https://example.com/schema#",
   "@class": "Article",
@@ -42,7 +42,7 @@ Again, the expectation is that when you dereference the implicitly derived docum
 
 Hyperdata is designed to follow the common single class based inheritance model of `class Person extends Agent`, however so as not to constrain its usage, object property names may be either a `name-fragment` as in previous examples, or a `full-IRI`. Usage of a `full-IRI` enables a mixin style composition of Hyperdata object descriptions.
 
-```
+```json
 {
   "@namespace": "https://example.com/schema#",
   "@class": "Article",
@@ -124,7 +124,7 @@ Within a Hyperdata document, a short form `name-fragment` can be used as a more 
 
 ### IRI ABNF Extensions
 Hyperdata extends the [Internationalized Resource Identifiers (IRIs) - RFC3987](https://www.ietf.org/rfc/rfc3987.txt) ABNF with the following four terms, for use in Hyperdata.
-```
+```abnf
    base-IRI       = scheme ":" ihier-part [ "?" iquery ]
    
    ns-IRI         = base-IRI "#"
