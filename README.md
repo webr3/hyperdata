@@ -14,7 +14,7 @@ When accessed over HTTP, the document should be served with the media type `appl
   
 ### Hyperdata Namespace
 
-Within a Hyperdata Document, a specific namespace is identified by a `ns-IRI`. This namespace identifies a schema within which Things, Properties, and Classes are named and described.
+In a Hyperdata Document, the namespace it provides is identified by a `ns-IRI`. This namespace defines a schema within which Things, Properties, and Classes are named and described.
 - `ns-IRI` - a namespace IRI which always ends with a `#`.
   - `https://example.org/schema#`
 
