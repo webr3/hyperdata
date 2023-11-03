@@ -85,8 +85,8 @@ In this example, the Hyperdata includes an object property name `https://example
   - If the `full-IRI` belongs to a different [`@class`](#class) than the one specified for the in-scope object, the property MAY be treated as a Mixin.
 
 ### @id
-- **Value Space**: `ns-IRI` OR `base-IRI` OR `full-IRI`
-- **Lexical Space**: `ns-IRI` OR `base-IRI` OR `full-IRI` OR `#` OR (`#` `name-fragment`)
+- **Value Space**: `ns-IRI` OR `full-IRI`
+- **Lexical Space**: `ns-IRI` OR `full-IRI` OR `#` OR (`#` `name-fragment`)
 - **Description**: Establishes a unique universally quantified `IRI` for the object to which this property belongs, and which the object describes.
 - **Behavior**:
   - If not defined on the current in-scope object, the object SHOULD be considered as existentially quantified.
