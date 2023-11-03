@@ -22,10 +22,10 @@ short form name-fragments:    Article, title
 The expectation is that when you dereference the schema document IRI of `https://example.com/schema` (for example via HTTP GET), a successful response will be a Hyperdata document describing the schema within the established `https://example.com/schema#` namespace.
 
 The dereferenced schema document is expected to specify:
-- the `Article` class, described by an object with an `@id` of `https://example.com/schema#Article`, and
-- the named properties of the `Article` class, such as `title`, which would be described by an object with an `@id` of `https://example.com/schema#title`.
+- the `Article` class, described by an object with an `@id` value of `https://example.com/schema#Article`, and
+- the named properties of the `Article` class, such as `title`, which would be described by an object with an `@id` value of `https://example.com/schema#title`.
 
-In this manner, the `Article` class and `title` property are universally and unambiguously named within the IRI space, allowing shared understanding of readily accessible hyperdata.
+In this manner, the `Article` class and it's `title` property are universally and unambiguously named within the IRI space, allowing shared understanding of readily accessible hyperdata.
 
 By adding an `@id` to the previous example, it can also be universally named within the IRI space, allowing it to be referenced and dereferenced within the web of hyperdata.
 ```
@@ -36,7 +36,7 @@ By adding an `@id` to the previous example, it can also be universally named wit
   "title": "Introduction to Hyperdata",
 }
 ```
-
+Again, the expectation is that when you dereference the implicitly derived document IRI of `https://example.com/hyperdata-introduction`, a successful response will include the above example hyperdata object. This example introduces all three JSON property extensions defined by hyperdata: `@namespace`, `@class`, `@id`, and the short form name-fragment style.
 
 ## Basic Concepts
 
