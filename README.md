@@ -13,13 +13,13 @@ Hyperdata is designed to layer on simply to existing JSON data, by adding a `@cl
 
 Doing this specifies the following values via implicit derivation:
 ```
-object class IRI:             https://example.com/schema#Article
-namespace IRI:                https://example.com/schema#
-object property IRI:          https://example.com/schema#title
-schema document IRI:          https://example.com/schema
-short form name-fragments:    Article, title
+object class IRI:             https://example.com/schema#Article (full-IRI)
+namespace IRI:                https://example.com/schema# (ns-IRI)
+object property IRI:          https://example.com/schema#title (full-IRI)
+schema document IRI:          https://example.com/schema (base-IRI)
+short form name-fragments:    Article, title (name-fragment)
 ```
-The expectation is that when you dereference the schema document IRI of `https://example.com/schema` (for example via HTTP GET), a successful response will be a Hyperdata document describing the schema within the established `https://example.com/schema#` namespace.
+The expectation is that when you dereference the schema document `base-IRI` of `https://example.com/schema` (for example via HTTP GET), a successful response will be a Hyperdata document describing the schema within the established `https://example.com/schema#` namespace.
 
 The dereferenced schema document is expected to specify:
 - the `Article` class, described by an object with an `@id` value of `https://example.com/schema#Article`, and
@@ -36,7 +36,7 @@ By adding an `@id` to the previous example, it can also be universally named wit
   "title": "Introduction to Hyperdata",
 }
 ```
-Again, the expectation is that when you dereference the implicitly derived document IRI of `https://example.com/hyperdata-introduction`, a successful response will include the above example hyperdata object. This example introduces all three JSON property extensions defined by hyperdata: `@namespace`, `@class`, `@id`, and the short form name-fragment style.
+Again, the expectation is that when you dereference the implicitly derived document `base-IRI` of `https://example.com/hyperdata-introduction`, a successful response will include the above example hyperdata object. This example introduces all three JSON property extensions defined by hyperdata: `@namespace`, `@class`, `@id`, and the short form name-fragment style.
 
 ## Basic Concepts
 
