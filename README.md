@@ -140,14 +140,21 @@ Hyperdata introduces a strict subset of IRI forms, which enable implicit derivat
 
 Given a [`@class`](#class) value of `https://example.com/schema#Person`, we can implicitly determine the [`@namespace`](#namespace) to be `https://example.com/schema#` and the Hyperdata document's dereferenceable `base-IRI` to be `https://example.com/schema`.
 
-Consequently, `{"@namespace": "https://example.com/schema#", "@class": "Person", "name": "Jon Doe"}` can succinctly be represented as `{"@class": "https://example.com/schema#Person", "name": "Jon Doe"}`.
+Consequently,
+```json
+{"@namespace": "https://example.com/schema#", "@class": "Person", "name": "Jon Doe"}
+```
+can succinctly be represented as:
+```json
+{"@class": "https://example.com/schema#Person", "name": "Jon Doe"}
+```
 
 To derive a `ns-IRI` from a `full-IRI`, remove everything after the `#`.
-- `https://example.com/schema#Person` to `https://example.com/schema#`
+- `https://example.com/schema#Person to https://example.com/schema#`
 
 To derive a `base-IRI` from a `full-IRI` or an `ns-IRI`, remove the `#` and any characters following it.
-- `https://example.com/schema#Person` OR `https://example.com/schema#` to `https://example.com/schema`
+- `https://example.com/schema#Person OR https://example.com/schema# to https://example.com/schema`
 
 To combine a `full-IRI` from a `ns-IRI` and a `name-fragment`, append the `name-fragment` to the `ns-IRI`.
-- `https://example.com/schema#` + `Person` = `https://example.com/schema#Person`
+- `https://example.com/schema# + Person = https://example.com/schema#Person`
 
