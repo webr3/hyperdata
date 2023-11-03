@@ -71,12 +71,6 @@ In this example, the hyperdata includes an object property name `https://example
 - **Description**: Specifies the namespace of the current object and its children, unless they define a different namespace explicitly via `@namespace` or implicitly via a `full-IRI` `@type`.
 - **Behavior**: If not defined on the current in-scope object, it must be inherited from the parent object.
 
-### @id
-- **Value Space**: `ns-IRI` OR `base-IRI` OR `full-IRI`
-- **Lexical Space**: `ns-IRI` OR `base-IRI` OR `full-IRI` OR `#` OR (`#` `name-fragment`)
-- **Description**: Establishes a unique universally quantified `IRI` for the object to which this property belongs, and which the object describes.
-- **Behavior**: If not defined on the current in-scope object, the object should be considered as existentially quantified.
-
 ### Object Property Name Expansion
 - **Value Space**: `full-IRI`
 - **Lexical Space**: `name-fragment` OR `full-IRI`
@@ -87,6 +81,17 @@ In this example, the hyperdata includes an object property name `https://example
   - If the `full-IRI` cannot be determined to have a hyperdata description after successfully dereferencing the associated hyperdata document or some other out of band method, it should be treated as traditional json object property name (it's lexical string form `name-fragment`).
   - If the `full-IRI` belongs to a different hyperdata namespace than the current in-scope `@namespace`, the property MAY be treated as a Mixin.
   - If the `full-IRI` belongs to a different `@class` than the one specified for the in-scope object, the property MAY be treated as a Mixin.
+
+### @id
+- **Value Space**: `ns-IRI` OR `base-IRI` OR `full-IRI`
+- **Lexical Space**: `ns-IRI` OR `base-IRI` OR `full-IRI` OR `#` OR (`#` `name-fragment`)
+- **Description**: Establishes a unique universally quantified `IRI` for the object to which this property belongs, and which the object describes.
+- **Behavior**:
+  - If not defined on the current in-scope object, the object SHOULD be considered as existentially quantified.
+  - If the lexical space is `#` OR (`#` `name-fragment`):
+    - a `full-IRI` SHOULD be formed by appending it to a `base-IRI` established by common out of band methods, such as the IRI used in a successful HTTP GET dereference which provided the hyperdata document.
+    - The current in-scope namespace `ns-IRI` MUST NOT be considered when resolving it.
+ 
 
 ## IRI Name Concepts
 
