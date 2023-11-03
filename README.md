@@ -61,7 +61,7 @@ In this example, the Hyperdata includes an object property name `https://example
 - **Description**: Specifies the full-IRI of the class of this object.
 - **Behavior**: 
   - If the value of [`@class`](#class) is a `full-IRI`, the value of [`@namespace`](#namespace) MUST be set to the computed `ns-IRI`.
-    - Example: `"@class": "https://example.com/schema#Person` entails `"@namespace": "https://example.com/schema#"`
+    - Example: `{"@class": "https://example.com/schema#Person"}` entails `{"@namespace": "https://example.com/schema#"}`
   - If the value of [`@class`](#class) is an `name-fragment`, the value MUST be appended to the in-scope [`@namespace`](#namespace) to compute it's `full-IRI` value.
     - Example: `{"@namespace": "https://example.com/schema#", "@class": "Person"}` entails a `full-IRI` of `https://example.com/schema#Person`
  
