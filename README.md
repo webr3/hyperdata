@@ -7,7 +7,7 @@ Hyperdata is designed to layer on simply to existing JSON data, by adding a `@cl
 ```
 {
   "@class": "https://example.com/schema#Article",
-  "title": "Introduction to Hyperdata",
+  "title": "Introduction to Hyperdata"
 }
 ```
 
@@ -33,10 +33,23 @@ By adding an `@id` to the previous example, it can also be universally named wit
   "@namespace": "https://example.com/schema#",
   "@class": "Article",
   "@id": "https://example.com/hyperdata-introduction#description",
-  "title": "Introduction to Hyperdata",
+  "title": "Introduction to Hyperdata"
 }
 ```
 Again, the expectation is that when you dereference the implicitly derived document `base-IRI` of `https://example.com/hyperdata-introduction`, a successful response will include the above example hyperdata object. This example introduces all three JSON property extensions defined by hyperdata: `@namespace`, `@class`, `@id`, and the short form name-fragment style.
+
+## Mixin Property Modelling
+
+Hyperdata is designed to follow the common single class based inheritance model of `class Person extends Agent`, however so as not to constrain it's usage, object property names may be either a `name-fragment` as in previous examples, or a `full-URI`. Usage of a `full-URI` enables a mixin style composition of hyperdata object descriptions. In this example, the hyperdata includes an object property name from a different namespace to the default defined for the object.
+
+{
+  "@namespace": "https://example.com/schema#",
+  "@class": "Article",
+  "@id": "https://example.com/hyperdata-introduction#description",
+  "title": "Introduction to Hyperdata",
+  "https://example.com/version#sha256": "c61379b9379dbbea76341ac49e1ea5e85b9a441053a404f42d16cd2c2db81959"
+}
+```
 
 ## Basic Concepts
 
@@ -105,7 +118,7 @@ To combine a `full-IRI` from a `ns-IRI` and a `name-fragment`, append the `name-
 - **Description**: Establishes a unique universally quantified `IRI` for the object of which this property belongs, and which the object describes.
 - **Behavior**: If not defined on the current in-scope object, the object should be considered as existentially quantified.
 
-## Object Property Name Expansion
+### Object Property Name Expansion
 - **Value Space**: `full-IRI`
 - **Lexical Space**: `name-fragment` OR `full-IRI`
 - **Description**: Potentially establishes a unique universally quantified `full-IRI` for the property.
