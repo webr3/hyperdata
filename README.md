@@ -82,6 +82,8 @@ In this example, the hyperdata includes an object property name `https://example
 - **Lexical Space**: `name-fragment` OR `full-IRI`
 - **Description**: Potentially establishes a unique universally quantified `full-IRI` for the property.
 - **Behavior**:
+  - If the value is an `name-fragment`, the value MUST be appened to the in-scope `@namespace` to compute it's potential `full-IRI` value.
+    - Example: `{"@namespace": "https://example.com/schema#", "name": "Jon Doe"}` entails a `full-IRI` of `https://example.com/schema#name`
   - If the `full-IRI` cannot be determined to have a hyperdata description after successfully dereferencing the associated hyperdata document or some other out of band method, it should be treated as traditional json object property name (it's lexical string form `name-fragment`).
   - If the `full-IRI` belongs to a different hyperdata namespace than the current in-scope `@namespace`, the property MAY be treated as a Mixin.
   - If the `full-IRI` belongs to a different `@class` than the one specified for the in-scope object, the property MAY be treated as a Mixin.
