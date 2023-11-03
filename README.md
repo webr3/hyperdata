@@ -14,11 +14,11 @@ When accessed over HTTP, the document should be served with the media type `appl
   
 ### Hyperdata Namespace
 
-In a Hyperdata Document, the namespace it provides is identified by a `ns-IRI`. This namespace defines a schema within which Things, Properties, and Classes are named and described.
+In a Hyperdata Document, the namespace it provides is identified by a `ns-IRI`. This defines a `@namespace` within which Things, Properties, and Classes are named and described.
 - `ns-IRI` - a namespace IRI which always ends with a `#`.
   - `https://example.org/schema#`
 
-### Hyperdata Name
+### Hyperdata Names
 
 In Hyperdata, Things, Properties, or Classes are given canonical `full-IRI` names.
 - `full-IRI` - an IRI that ends with a `#name-fragment`.
@@ -33,7 +33,7 @@ Within a Hyperdata document, a short form `name-fragment` can be used as a more 
 ```
 [
   {
-   "@schema": "https://example.org/schema#",
+   "@namespace": "https://example.org/schema#",
    "@class": "Person",
    "@id": "https://jondoe.example.org/#me",
    "nick": "Jonny",
@@ -69,14 +69,14 @@ Within a Hyperdata document, a short form `name-fragment` can be used as a more 
 
 ### @class
 - **Type**: `name-fragment` OR `full-IRI`
-- **Description**: When the value is an `name-fragment` and concatenated with `@schema`, it creates an IRI identifying the class of the object.
+- **Description**: When the value is an `name-fragment` and concatenated with `@namespace`, it creates an IRI identifying the class of the object.
 - **Behavior**: 
-  - If the value of `@class` is a `full-IRI`, the value of `@schema` MUST be set to the computed `ns-IRI`.
-  - Example: `"@class": "https://example.org/Agents#Person` entails `"@schema": "https://example.org/Agents#"`
-  - If the value of `@class` is an `name-fragment`, the value MUST be appened to the closest `@schema` to compute it's `full-IRI`
-  - Example: `{"@schema": "https://example.org/Agents#", "@class": "Person"}` implies a `ns-IRI` of `https://example.org/Agents#Person`
+  - If the value of `@class` is a `full-IRI`, the value of `@namespace` MUST be set to the computed `ns-IRI`.
+  - Example: `"@class": "https://example.org/Agents#Person` entails `"@namespace": "https://example.org/Agents#"`
+  - If the value of `@class` is an `name-fragment`, the value MUST be appened to the closest `@namespace` to compute it's `full-IRI`
+  - Example: `{"@namespace": "https://example.org/Agents#", "@class": "Person"}` implies a `ns-IRI` of `https://example.org/Agents#Person`
  
-### @schema
+### @namespace
 - **Type**: `#` OR `ns-IRI`
 - **Description**: Specifies the schema of the current object and its children, providing semantic context and definitions.
 - **Behavior**: 
@@ -90,7 +90,7 @@ Within a Hyperdata document, a short form `name-fragment` can be used as a more 
 ## Object Property Names
 - **Type**: `name-fragment` || `full-IRI`
 - **Usage**: Object properties should be concatenated to the value of `@vocab` to establish a `full-IRI` for the property, if the resulting value is defined in the schema then it must be considered as a canonical IRI identifying the property.
-- Example: `{"@schema": "https://example.org/Agents#", "nick": "Jonny"}` implies a `full-IRI` of `https://example.org/Agents#nick`
+- Example: `{"@namespace": "https://example.org/Agents#", "nick": "Jonny"}` implies a `full-IRI` of `https://example.org/Agents#nick`
 
 ## Constraints on JSON
 - None
@@ -99,7 +99,7 @@ Within a Hyperdata document, a short form `name-fragment` can be used as a more 
 ```
 [
   {
-   "@schema": "https://example.org/Agents#",
+   "@namespace": "https://example.org/Agents#",
    "@type": "Person",
    "@id": "https://jondoe.example.org/#me",
    "nick": "Jonny",
