@@ -11,7 +11,7 @@ Hyperdata is designed to layer on simply to existing JSON data, by adding a `@cl
 }
 ```
 
-We have specified the following values via implicit derivation:
+Doing this specifies the following values via implicit derivation:
 ```
 object class IRI:             https://example.com/schema#Article
 namespace IRI:                https://example.com/schema#
@@ -19,11 +19,15 @@ object property IRI:          https://example.com/schema#title
 schema document IRI:          https://example.com/schema
 short form name-fragments:    Article, title
 ```
-The expectation is that when you dereference the schema document IRI of `https://example.com/schema` (for example via HTTP GET), a successful response will be a Hyperdata schema document describing the `https://example.com/schema#` namespace, which will specify the `Article` class, and it's named properties such as `title`.
+The expectation is that when you dereference the schema document IRI of `https://example.com/schema` (for example via HTTP GET), a successful response will be a Hyperdata document describing the schema within the established `https://example.com/schema#` namespace.
 
+The dereferenced schema document is expected to specify:
+- the `Article` class, described by an object with an `@id` of `https://example.com/schema#Article`, and
+- the named properties of the `Article` class, such as `title`, which would be described by an object with an `@id` of `https://example.com/schema#title`.
 
+In this manner, the `Article` class and `title` property are universally and unambiguously named within the IRI space, allowing shared understanding of readily accessible hyperdata.
 
-The previous example can also be written as follows, rendering the same results:
+By adding an `@id` to the previous example, it can also be universally named within the IRI space, allowing it to be referenced and dereferenced within the web of hyperdata.
 ```
 {
   "@namespace": "https://example.com/schema#",
