@@ -136,7 +136,7 @@ Hyperdata extends the [Internationalized Resource Identifiers (IRIs) - RFC3987](
 
 ### Implicit Derivation of Namespaces and Documents
 
-Hyperdata introduces a strict subset of IRI forms, which enable implicit derivation of both the namespace's `ns-IRI`, and the Hyperdata document's `base-IRI` from a single `full-IRI`.
+Hyperdata introduces a strict subset of three IRI forms, each a valid IRI form, which enable implicit derivation of both the namespace's `ns-IRI`, and the Hyperdata document's `base-IRI` from a single `full-IRI`.
 
 Given a [`@class`](#class) value of `https://example.com/schema#Person`, we can implicitly determine the [`@namespace`](#namespace) to be `https://example.com/schema#` and the Hyperdata document's dereferenceable `base-IRI` to be `https://example.com/schema`.
 
