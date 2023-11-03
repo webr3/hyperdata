@@ -129,7 +129,7 @@ To combine a `full-IRI` from a `ns-IRI` and a `name-fragment`, append the `name-
 ### @id
 - **Value Space**: `ns-IRI` OR `base-IRI` OR `full-IRI`
 - **Lexical Space**: `ns-IRI` OR `base-IRI` OR `full-IRI` OR `#` OR (`#` `name-fragment`)
-- **Description**: Establishes a unique universally quantified `IRI` for the object of which this property belongs, and which the object describes.
+- **Description**: Establishes a unique universally quantified `IRI` for the object to which this property belongs, and which the object describes.
 - **Behavior**: If not defined on the current in-scope object, the object should be considered as existentially quantified.
 
 ### Object Property Name Expansion
@@ -137,7 +137,7 @@ To combine a `full-IRI` from a `ns-IRI` and a `name-fragment`, append the `name-
 - **Lexical Space**: `name-fragment` OR `full-IRI`
 - **Description**: Potentially establishes a unique universally quantified `full-IRI` for the property.
 - **Behavior**:
-  - If the `full-IRI` cannot be determined to have a hyperdata description after successfully dereferencing the hyperdata document to which it belongs, it should be treated as traditional json object property name (it's lexical string form).
-  - If the `full-IRI` belongs to a different hyperdata namespace to the current in-scope `@namespace`, the property MAY be treated as a Mixin.
+  - If the `full-IRI` cannot be determined to have a hyperdata description after successfully dereferencing the associated hyperdata document or some other out of band method, it should be treated as traditional json object property name (it's lexical string form `name-fragment`).
+  - If the `full-IRI` belongs to a different hyperdata namespace than the current in-scope `@namespace`, the property MAY be treated as a Mixin.
   - If the `full-IRI` belongs to a different `@class` than the one specified for the in-scope object, the property MAY be treated as a Mixin.
 
