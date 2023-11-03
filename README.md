@@ -40,7 +40,7 @@ Again, the expectation is that when you dereference the implicitly derived docum
 
 ## Mixin Property Modelling
 
-Hyperdata is designed to follow the common single class based inheritance model of `class Person extends Agent`, however so as not to constrain it's usage, object property names may be either a `name-fragment` as in previous examples, or a `full-URI`. Usage of a `full-URI` enables a mixin style composition of hyperdata object descriptions. In this example, the hyperdata includes an object property name from a different namespace to the default defined for the object.
+Hyperdata is designed to follow the common single class based inheritance model of `class Person extends Agent`, however so as not to constrain it's usage, object property names may be either a `name-fragment` as in previous examples, or a `full-URI`. Usage of a `full-URI` enables a mixin style composition of hyperdata object descriptions.
 
 ```
 {
@@ -51,6 +51,7 @@ Hyperdata is designed to follow the common single class based inheritance model 
   "https://example.com/version#sha256": "c61379b9379dbbea76341ac49e1ea5e85b9a441053a404f42d16cd2c2db81959"
 }
 ```
+In this example, the hyperdata includes an object property name `https://example.com/version#sha256` from a different namespace (`https://example.com/version#`) to the default defined for the object (`https://example.com/schema#`).
 
 ## Basic Concepts
 
