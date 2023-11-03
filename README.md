@@ -79,6 +79,18 @@ Within a Hyperdata document, a short form `name-fragment` can be used as a more 
 - `name-fragment` - a shorthand syntax used within hyperdata documents to represent a `full-IRI`.
   - `{"@namespace": "https://example.com/schema#", "@class": "Person", "name": "Jon Doe"}`
 
+
+## IRI ABNF Extensions
+```
+   base-IRI       = scheme ":" ihier-part [ "?" iquery ]
+   
+   ns-IRI         = base-IRI "#"
+   
+   full-IRI       = ns-IRI "#" name-fragment
+   
+   name-fragment  = 1*( ipchar / "/" / "?" )
+```
+
 ### Implicit Derivation of Namespaces and Documents
 
 Hyperdata introduces a strict subset of IRI forms, which enable implicit derivation of both the namespace's `ns-IRI`, and the hyperdata document's `base-IRI` from a single `full-IRI`.
@@ -125,41 +137,7 @@ To combine a `full-IRI` from a `ns-IRI` and a `name-fragment`, append the `name-
 - **Lexical Space**: `name-fragment` OR `full-IRI`
 - **Description**: Potentially establishes a unique universally quantified `full-IRI` for the property.
 - **Behavior**:
-  - If the `full-IRI` cannot be determined to have a hyperdata description after successfully dereferencing the hyperdata document to which it belongs, it should be treated as traditional json name.
-  - If the `full-IRI` belongs to a different hyperdata namespace to the current in-scope `@namespace`, it's usage is undefined by this specification.
-  - If the `full-IRI` belongs to a different `@class` than the one specified for the in-scope object, it's usage is undefined by this specification.
-
-
-### Example Hyperdata Document
-
-```
-[
-  {
-   "@namespace": "https://example.com/schema#",
-   "@class": "Person",
-   "@id": "https://jondoe.example.com/#me",
-   "name": "Jon Doe",
-   "homepage": {
-     "href": "https://jondoe.example.com/",
-     "title": "Jon Doe's Homepage"
-   },
-   "knows":  {
-     "@id": "https://janedoe.example.com/#me",
-     "name": "Jane Doe"
-    }
-  },
-  ...
-]
-```
-
-## IRI ABNF Extensions
-```
-   base-IRI       = scheme ":" ihier-part [ "?" iquery ]
-   
-   ns-IRI         = base-IRI "#"
-   
-   full-IRI       = ns-IRI "#" name-fragment
-   
-   name-fragment  = 1*( ipchar / "/" / "?" )
-```
+  - If the `full-IRI` cannot be determined to have a hyperdata description after successfully dereferencing the hyperdata document to which it belongs, it should be treated as traditional json object property name (it's lexical string form).
+  - If the `full-IRI` belongs to a different hyperdata namespace to the current in-scope `@namespace`, the property MAY be treated as a Mixin.
+  - If the `full-IRI` belongs to a different `@class` than the one specified for the in-scope object, the property MAY be treated as a Mixin.
 
