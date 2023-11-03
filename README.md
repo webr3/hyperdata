@@ -36,6 +36,15 @@ Given a `@class` value of `https://example.org/schema#Person`, we can implicitly
 
 Consequently, `{"@namespace": "https://example.org/schema#", "@class": "Person", "name": "Jon Doe"}` can succinctly be represented as `{"@class": "https://example.org/schema#Person", "name": "Jon Doe"}`.
 
+### Deriving and Combining
+- To derive a `ns-IRI` from a `full-IRI`, remove everything after the `#`.
+  - `https://example.org/schema#Person` to `https://example.org/schema#`
+- To derive a `base-IRI` from a `full-IRI` or an `ns-IRI`, remove the `#` and any characters following it.
+  - `https://example.org/schema#Person` OR `https://example.org/schema#` to `https://example.org/schema`
+- To combine a `full-IRI` from a `ns-IRI` and a `name-fragment`, simply append the `name-fragment` to the `ns-IRI`.
+  - `https://example.org/schema#` + `Person` = `https://example.org/schema#Person`
+
+
 ### Example Document
 
 ```
@@ -68,11 +77,6 @@ Consequently, `{"@namespace": "https://example.org/schema#", "@class": "Person",
    
    name-fragment  = 1*( ipchar / "/" / "?" )
 ```
-
-### Converting
-- To convert an `full-IRI` to a `ns-IRI` simply remove everything after the `#`.
-- To convert an `full-IRI` or a `ns-IRI` to a `base-IRI` simply remove the `#` and any chars which follows it.
-- To establish an `full-IRI` from an `ns-IRI` and a `name-fragment`, simply append the `name-fragment` to the `ns-IRI`.
 
 ## Properties
 
