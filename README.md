@@ -45,8 +45,41 @@ To derive a `base-IRI` from a `full-IRI` or an `ns-IRI`, remove the `#` and any 
 To combine a `full-IRI` from a `ns-IRI` and a `name-fragment`, append the `name-fragment` to the `ns-IRI`.
 - `https://example.org/schema#` + `Person` = `https://example.org/schema#Person`
 
+## JSON Property Extensions
 
-### Example Document
+### @class
+- **Value Space**: `full-IRI`
+- **Lexical Space**: `name-fragment` OR `full-IRI`
+- **Description**: Specifies the full-IRI of the class of this object.
+- **Behavior**: 
+  - If the value of `@class` is a `full-IRI`, the value of `@namespace` MUST be set to the computed `ns-IRI`.
+    - Example: `"@class": "https://example.org/schema#Person` entails `"@namespace": "https://example.org/schema#"`
+  - If the value of `@class` is an `name-fragment`, the value MUST be appened to the in-scope `@namespace` to compute it's `full-IRI` value.
+    - Example: `{"@namespace": "https://example.org/schema#", "@class": "Person"}` entails a `full-IRI` of `https://example.org/schema#Person`
+ 
+### @namespace
+- **Value Space**: `ns-IRI`
+- **Lexical Space**: `#` OR `ns-IRI`
+- **Description**: Specifies the namespace of the current object and its children, unless they define a different namespace explicitly via `@namespace` or implicitly via a `full-IRI` `@type`.
+- **Behavior**: If not defined on the current in-scope object, it must be inherited from the parent object.
+
+### @id
+- **Value Space**: `ns-IRI` OR `base-IRI` OR `full-IRI`
+- **Lexical Space**: `ns-IRI` OR `base-IRI` OR `full-IRI` OR `#` OR (`#` `name-fragment`)
+- **Description**: Establishes a unique universally quantified `IRI` for the object of which this property belongs, and which the object describes.
+- **Behavior**: If not defined on the current in-scope object, the object should be considered as existentially quantified.
+
+## Object Property Name Expansion
+- **Value Space**: `full-IRI`
+- **Lexical Space**: `name-fragment` OR `full-IRI`
+- **Description**: Potentially establishes a unique universally quantified `full-IRI` for the property.
+- **Behavior**:
+  - If the `full-IRI` cannot be determined to have a hyperdata description after successfully dereferencing the hyperdata document to which it belongs, it should be treated as traditional json name.
+  - If the `full-IRI` belongs to a different hyperdata namespace to the current in-scope `@namespace`, it's usage is undefined by this specification.
+  - If the `full-IRI` belongs to a different `@class` than the one specified for the in-scope object, it's usage is undefined by this specification.
+
+
+### Example Hyperdata Document
 
 ```
 [
@@ -79,54 +112,3 @@ To combine a `full-IRI` from a `ns-IRI` and a `name-fragment`, append the `name-
    name-fragment  = 1*( ipchar / "/" / "?" )
 ```
 
-## Properties
-
-### @class
-- **Type**: `name-fragment` OR `full-IRI`
-- **Description**: When the value is an `name-fragment` and concatenated with `@namespace`, it creates an IRI identifying the class of the object.
-- **Behavior**: 
-  - If the value of `@class` is a `full-IRI`, the value of `@namespace` MUST be set to the computed `ns-IRI`.
-  - Example: `"@class": "https://example.org/Agents#Person` entails `"@namespace": "https://example.org/Agents#"`
-  - If the value of `@class` is an `name-fragment`, the value MUST be appened to the closest `@namespace` to compute it's `full-IRI`
-  - Example: `{"@namespace": "https://example.org/Agents#", "@class": "Person"}` implies a `ns-IRI` of `https://example.org/Agents#Person`
- 
-### @namespace
-- **Type**: `#` OR `ns-IRI`
-- **Description**: Specifies the schema of the current object and its children, providing semantic context and definitions.
-- **Behavior**: 
-  - If not present in the current object, it should be inherited from a parent object.
-
-### @id
-- **Type**: `name-fragment` OR `full-IRI`
-- **Description**: Serves as a unique identifier for the object of which this property belongs.
-- **Usage**: Enables unique identification of objects within the JSON document or across different documents.
-
-## Object Property Names
-- **Type**: `name-fragment` || `full-IRI`
-- **Usage**: Object properties should be concatenated to the value of `@vocab` to establish a `full-IRI` for the property, if the resulting value is defined in the schema then it must be considered as a canonical IRI identifying the property.
-- Example: `{"@namespace": "https://example.org/Agents#", "nick": "Jonny"}` implies a `full-IRI` of `https://example.org/Agents#nick`
-
-## Constraints on JSON
-- None
-
-## Example 
-```
-[
-  {
-   "@namespace": "https://example.org/Agents#",
-   "@type": "Person",
-   "@id": "https://jondoe.example.org/#me",
-   "nick": "Jonny",
-   "givenname": "Jon",
-   "family_name": "Doe",
-   "depiction": "https://jondoe.example.org/me.jpg",
-   "homepage": "https://jondoe.example.org/",
-   "interest": "https://dbpedia.org/resource/Film",
-   "knows":  {
-     "@id": "https://janedoe.example.org/#me",
-     "name": "Jane Doe"
-    }
-  },
-  ...
-]
-```
