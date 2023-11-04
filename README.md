@@ -22,21 +22,21 @@ short form name-fragments:    Article, title                           (name-fra
 The expectation is that when you dereference the schema document `base-IRI` of `https://example.com/schema` (for example via HTTP GET), a successful response will be a Hyperdata document describing the schema within the established `https://example.com/schema#` namespace.
 
 The dereferenced schema document is expected to specify:
-- the `Article` class, described by an object with an [`#name`](#name) value of `https://example.com/schema#Article`, and
-- the named properties of the `Article` class, such as `title`, which would be described by an object with an [`#name`](#name) value of `https://example.com/schema#title`.
+- the `Article` class, described by an object with an [`#id`](#id) value of `https://example.com/schema#Article`, and
+- the named properties of the `Article` class, such as `title`, which would be described by an object with an [`#id`](#id) value of `https://example.com/schema#title`.
 
 In this manner, the `Article` class and its `title` property are universally and unambiguously named within the IRI space, allowing shared understanding of readily accessible Hyperdata.
 
-By adding an [`#name`](#name) to the previous example, it can also be universally named within the IRI space, allowing it to be referenced and dereferenced within the web of Hyperdata.
+By adding an [`#id`](#id) to the previous example, it can also be universally named within the IRI space, allowing it to be referenced and dereferenced within the web of Hyperdata.
 ```json
 {
   "#namespace": "https://example.com/schema#",
   "#class": "Article",
-  "#name": "https://example.com/hyperdata-introduction#description",
+  "#id": "https://example.com/hyperdata-introduction#description",
   "title": "Introduction to Hyperdata"
 }
 ```
-Again, the expectation is that when you dereference the implicitly derived document `base-IRI` of `https://example.com/hyperdata-introduction`, a successful response will include the above example Hyperdata object. This example introduces all three JSON property extensions defined by Hyperdata: [`#namespace`](#namespace), [`#class`](#class), [`#name`](#name), and the short form name-fragment style.
+Again, the expectation is that when you dereference the implicitly derived document `base-IRI` of `https://example.com/hyperdata-introduction`, a successful response will include the above example Hyperdata object. This example introduces all three JSON property extensions defined by Hyperdata: [`#namespace`](#namespace), [`#class`](#class), [`#id`](#id), and the short form name-fragment style.
 
 ## Mixin Property Modelling
 
@@ -46,7 +46,7 @@ Hyperdata is designed to follow the common single class based inheritance model 
 {
   "#namespace": "https://example.com/schema#",
   "#class": "Article",
-  "#name": "https://example.com/hyperdata-introduction#description",
+  "#id": "https://example.com/hyperdata-introduction#description",
   "title": "Introduction to Hyperdata",
   "https://example.com/version#sha256": "c61379b9379dbbea76341ac49e1ea5e85b9a441053a404f42d16cd2c2db81959"
 }
@@ -84,7 +84,7 @@ In this example, the Hyperdata includes an object property name `https://example
   - If the `full-IRI` belongs to a different Hyperdata namespace than the current in-scope [`#namespace`](#namespace), the property MAY be treated as a Mixin.
   - If the `full-IRI` belongs to a different [`#class`](#class) than the one specified for the in-scope object, the property MAY be treated as a Mixin.
 
-### #name
+### #id
 - **Value Space**: `ns-IRI` OR `full-IRI`
 - **Lexical Space**: `ns-IRI` OR `full-IRI` OR `#` OR (`#` `name-fragment`)
 - **Description**: Establishes a unique universally quantified `IRI` for the object to which this property belongs, and which the object describes.
