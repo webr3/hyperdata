@@ -3,10 +3,10 @@
 This specification defines Hyperdata, an extension to JSON and IRI that adds classes, IRI identifiers, namespaces, and shared schemas to JSON objects. It is designed to enhance interoperability, data linking, and the self-descriptiveness of JSON data.
 
 ## Introduction
-Hyperdata is designed to layer on simply to existing JSON data, by adding a [`@class`](#class):
+Hyperdata is designed to layer on simply to existing JSON data, by adding a [`#class`](#class):
 ```json
 {
-  "@class": "https://example.com/schema#Article",
+  "#class": "https://example.com/schema#Article",
   "title": "Introduction to Hyperdata"
 }
 ```
@@ -22,21 +22,21 @@ short form name-fragments:    Article, title                           (name-fra
 The expectation is that when you dereference the schema document `base-IRI` of `https://example.com/schema` (for example via HTTP GET), a successful response will be a Hyperdata document describing the schema within the established `https://example.com/schema#` namespace.
 
 The dereferenced schema document is expected to specify:
-- the `Article` class, described by an object with an [`@id`](#id) value of `https://example.com/schema#Article`, and
-- the named properties of the `Article` class, such as `title`, which would be described by an object with an [`@id`](#id) value of `https://example.com/schema#title`.
+- the `Article` class, described by an object with an [`#name`](#name) value of `https://example.com/schema#Article`, and
+- the named properties of the `Article` class, such as `title`, which would be described by an object with an [`#name`](#name) value of `https://example.com/schema#title`.
 
 In this manner, the `Article` class and its `title` property are universally and unambiguously named within the IRI space, allowing shared understanding of readily accessible Hyperdata.
 
-By adding an [`@id`](#id) to the previous example, it can also be universally named within the IRI space, allowing it to be referenced and dereferenced within the web of Hyperdata.
+By adding an [`#name`](#name) to the previous example, it can also be universally named within the IRI space, allowing it to be referenced and dereferenced within the web of Hyperdata.
 ```json
 {
-  "@namespace": "https://example.com/schema#",
-  "@class": "Article",
-  "@id": "https://example.com/hyperdata-introduction#description",
+  "#namespace": "https://example.com/schema#",
+  "#class": "Article",
+  "#name": "https://example.com/hyperdata-introduction#description",
   "title": "Introduction to Hyperdata"
 }
 ```
-Again, the expectation is that when you dereference the implicitly derived document `base-IRI` of `https://example.com/hyperdata-introduction`, a successful response will include the above example Hyperdata object. This example introduces all three JSON property extensions defined by Hyperdata: [`@namespace`](#namespace), [`@class`](#class), [`@id`](#id), and the short form name-fragment style.
+Again, the expectation is that when you dereference the implicitly derived document `base-IRI` of `https://example.com/hyperdata-introduction`, a successful response will include the above example Hyperdata object. This example introduces all three JSON property extensions defined by Hyperdata: [`#namespace`](#namespace), [`#class`](#class), [`#name`](#name), and the short form name-fragment style.
 
 ## Mixin Property Modelling
 
@@ -44,9 +44,9 @@ Hyperdata is designed to follow the common single class based inheritance model 
 
 ```json
 {
-  "@namespace": "https://example.com/schema#",
-  "@class": "Article",
-  "@id": "https://example.com/hyperdata-introduction#description",
+  "#namespace": "https://example.com/schema#",
+  "#class": "Article",
+  "#name": "https://example.com/hyperdata-introduction#description",
   "title": "Introduction to Hyperdata",
   "https://example.com/version#sha256": "c61379b9379dbbea76341ac49e1ea5e85b9a441053a404f42d16cd2c2db81959"
 }
@@ -55,36 +55,36 @@ In this example, the Hyperdata includes an object property name `https://example
 
 ## JSON Property Extensions
 
-### @class
+### #class
 - **Value Space**: `full-IRI`
 - **Lexical Space**: `name-fragment` OR `full-IRI`
 - **Description**: Specifies the full-IRI of the class of this object.
 - **Behavior**: 
-  - If the value of [`@class`](#class) is a `full-IRI`, the value of [`@namespace`](#namespace) MUST be set to the computed `ns-IRI`.
-    - Example: `{"@class": "https://example.com/schema#Person"}` entails `{"@namespace": "https://example.com/schema#"}`
-  - If the value of [`@class`](#class) is an `name-fragment`, the value MUST be appended to the in-scope [`@namespace`](#namespace) to compute it's `full-IRI` value.
-    - Example: `{"@namespace": "https://example.com/schema#", "@class": "Person"}` entails a `full-IRI` of `https://example.com/schema#Person`
+  - If the value of [`#class`](#class) is a `full-IRI`, the value of [`#namespace`](#namespace) MUST be set to the computed `ns-IRI`.
+    - Example: `{"#class": "https://example.com/schema#Person"}` entails `{"#namespace": "https://example.com/schema#"}`
+  - If the value of [`#class`](#class) is an `name-fragment`, the value MUST be appended to the in-scope [`#namespace`](#namespace) to compute it's `full-IRI` value.
+    - Example: `{"#namespace": "https://example.com/schema#", "#class": "Person"}` entails a `full-IRI` of `https://example.com/schema#Person`
  
-### @namespace
+### #namespace
 - **Value Space**: `ns-IRI`
 - **Lexical Space**: `#` OR `ns-IRI`
-- **Description**: Specifies the namespace of the current object and its children, unless they define a different namespace explicitly via [`@namespace`](#namespace) or implicitly via a `full-IRI` [`@class`](#class).
+- **Description**: Specifies the namespace of the current object and its children, unless they define a different namespace explicitly via [`#namespace`](#namespace) or implicitly via a `full-IRI` [`#class`](#class).
 - **Behavior**:
   - If not defined on the current in-scope object, it MUST be inherited from the parent object.
-  - If the value of [`@class`](#class) is a `full-IRI`, the `ns-IRI` value specified by this [`@namespace`](#namespace) MUST be ignored.
+  - If the value of [`#class`](#class) is a `full-IRI`, the `ns-IRI` value specified by this [`#namespace`](#namespace) MUST be ignored.
 
 ### Object Property Name Expansion
 - **Value Space**: `full-IRI`
 - **Lexical Space**: `name-fragment` OR `full-IRI`
 - **Description**: Potentially establishes a unique universally quantified `full-IRI` for the property.
 - **Behavior**:
-  - If the value is an `name-fragment`, the value MUST be appened to the in-scope [`@namespace`](#namespace) to compute its potential `full-IRI` value.
-    - Example: `{"@namespace": "https://example.com/schema#", "name": "Jon Doe"}` entails a `full-IRI` of `https://example.com/schema#name`
+  - If the value is an `name-fragment`, the value MUST be appened to the in-scope [`#namespace`](#namespace) to compute its potential `full-IRI` value.
+    - Example: `{"#namespace": "https://example.com/schema#", "name": "Jon Doe"}` entails a `full-IRI` of `https://example.com/schema#name`
   - If the `full-IRI` cannot be determined to have a Hyperdata description after successfully dereferencing the associated Hyperdata document or some other out of band method, it should be treated as traditional JSON object property name (it's lexical string form `name-fragment`).
-  - If the `full-IRI` belongs to a different Hyperdata namespace than the current in-scope [`@namespace`](#namespace), the property MAY be treated as a Mixin.
-  - If the `full-IRI` belongs to a different [`@class`](#class) than the one specified for the in-scope object, the property MAY be treated as a Mixin.
+  - If the `full-IRI` belongs to a different Hyperdata namespace than the current in-scope [`#namespace`](#namespace), the property MAY be treated as a Mixin.
+  - If the `full-IRI` belongs to a different [`#class`](#class) than the one specified for the in-scope object, the property MAY be treated as a Mixin.
 
-### @id
+### #name
 - **Value Space**: `ns-IRI` OR `full-IRI`
 - **Lexical Space**: `ns-IRI` OR `full-IRI` OR `#` OR (`#` `name-fragment`)
 - **Description**: Establishes a unique universally quantified `IRI` for the object to which this property belongs, and which the object describes.
@@ -107,7 +107,7 @@ When accessed over HTTP, the document should be served with the media type `appl
   
 ### Hyperdata Namespace `ns-IRI`
 
-In a Hyperdata Document, the namespace it provides is identified by a `ns-IRI`. This defines a [`@namespace`](#namespace) within which Things, Properties, and Classes are named and described.
+In a Hyperdata Document, the namespace it provides is identified by a `ns-IRI`. This defines a [`#namespace`](#namespace) within which Things, Properties, and Classes are named and described.
 - `ns-IRI` - a namespace IRI which always ends with a `#`.
   - `https://example.com/schema#`
 
@@ -117,9 +117,9 @@ In Hyperdata, Things, Properties, or Classes are given canonical `full-IRI` name
 - `full-IRI` - an IRI that ends with a `#name-fragment`.
   - `https://example.com/schema#Person`, `https://example.com/schema#name`
 
-Within a Hyperdata document, a short form `name-fragment` can be used as a more concise way to denote a `full-IRI` when combined with a [`@namespace`](#namespace).
+Within a Hyperdata document, a short form `name-fragment` can be used as a more concise way to denote a `full-IRI` when combined with a [`#namespace`](#namespace).
 - `name-fragment` - a shorthand syntax used within Hyperdata documents to represent a `full-IRI`.
-  - `{"@namespace": "https://example.com/schema#", "@class": "Person", "name": "Jon Doe"}`
+  - `{"#namespace": "https://example.com/schema#", "#class": "Person", "name": "Jon Doe"}`
 
 
 ### IRI ABNF Extensions
@@ -147,15 +147,15 @@ To derive a `base-IRI` from a `full-IRI` or an `ns-IRI`, remove the `#` and any 
 To combine a `full-IRI` from a `ns-IRI` and a `name-fragment`, append the `name-fragment` to the `ns-IRI`.
 - `https://example.com/schema# + Person = https://example.com/schema#Person`
 
-Given a [`@class`](#class) value of `https://example.com/schema#Person`, we can implicitly determine the [`@namespace`](#namespace) to be `https://example.com/schema#` and the Hyperdata document's dereferenceable `base-IRI` to be `https://example.com/schema`.
+Given a [`#class`](#class) value of `https://example.com/schema#Person`, we can implicitly determine the [`#namespace`](#namespace) to be `https://example.com/schema#` and the Hyperdata document's dereferenceable `base-IRI` to be `https://example.com/schema`.
 
 Consequently:
 ```json
-{"@namespace": "https://example.com/schema#", "@class": "Person", "name": "Jon Doe"}
+{"#namespace": "https://example.com/schema#", "#class": "Person", "name": "Jon Doe"}
 ```
 can succinctly be represented as:
 ```json
-{"@class": "https://example.com/schema#Person", "name": "Jon Doe"}
+{"#class": "https://example.com/schema#Person", "name": "Jon Doe"}
 ```
 and agents can attempt to dereference the `base-IRI` to obtain the Hyperdata schema:
 ```
